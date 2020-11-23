@@ -29,10 +29,10 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 * Malta: 2004 - 2015        | (Year of entering EU: 2004)
 * Netherlands: 1979 - 2016  | (Year of entering EU: 1958)
 * Poland: 2004 - 2015       | (Year of entering EU: 2004)
-* Portugal: 1986 - 2014     | (Year of entering EU: 1986)
+* Portugal: 1986 - 2003, 2007 - 2014     | (Year of entering EU: 1986)
 * Romania: 2007 - 2016      | (Year of entering EU: 2007)
 * Slovak Rep.: 2004 - 2014  | (Year of entering EU: 2004)
-* Slovenia: 2004 - 2015     | (Year of entering EU: 2004)
+* Slovenia: 2004 - 2005, 2008 - 2015     | (Year of entering EU: 2004)
 * Sweden: 1995 - 2016       | (Year of entering EU: 1995)
 * United King.: 1979 - 2015 | (Year of entering EU: 1973)
  
