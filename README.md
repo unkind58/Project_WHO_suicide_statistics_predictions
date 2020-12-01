@@ -3,7 +3,7 @@
 ## Project_WHO_suicide_statistics_predictions
 WHO suicide statistics predictions for European Union country-members
 
-## Content (1)
+## Main content and dependent variable
 WHO Suicide Statistics data ([WHO Mortality Database](https://www.who.int/healthinfo/mortality_data/en/)) for each  EU member country, year, age groups and sex.
 Note that temporal dependencies in some cases do not cover the year of entering EU.
 
@@ -36,6 +36,17 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 * Sweden: 1995 - 2016       | (Year of entering EU: 1995)
 * United King.: 1979 - 2015 | (Year of entering EU: 1973)
  
+## Additional metrics:
+* GDP per capita(from [World Bank Open Data](https://data.worldbank.org/));
+* GINI index(from [World Bank Open Data](https://data.worldbank.org/));
+* Foreign Exchange Reserves (from [World Bank Open Data](https://data.worldbank.org/));
+* Unemployment (from [World Bank Open Data](https://data.worldbank.org/));
+* Inflation Rate (from [World Bank Open Data](https://data.worldbank.org/));
+* ARMS export (from [World Bank Open Data](https://data.worldbank.org/));
+* ARMS import (from [World Bank Open Data](https://data.worldbank.org/));
+* Life length (from [World Bank Open Data](https://data.worldbank.org/));
+* Corruption perception index (from [Transparency](https://www.transparency.org/en/cpi));
+
 ## Acknowledgments
 Tribe of AI
 
