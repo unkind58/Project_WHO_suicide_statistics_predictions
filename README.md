@@ -46,6 +46,8 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 * ARMS import (from [World Bank Open Data](https://data.worldbank.org/));
 * Life length (from [World Bank Open Data](https://data.worldbank.org/));
 * Corruption perception index (from [Transparency](https://www.transparency.org/en/cpi));
+* Average January weather temperature (from [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/));
+* Average July weather temperature (from [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/)).
 
 ## Acknowledgments
 Tribe of AI
