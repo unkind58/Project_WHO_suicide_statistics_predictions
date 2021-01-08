@@ -37,8 +37,8 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 * United King.: 1979 - 2015 | (Year of entering EU: 1973)
  
 ## Additional metrics:
-* GDP per capita(from [World Bank Open Data](https://data.worldbank.org/));
-* GINI index(from [World Bank Open Data](https://data.worldbank.org/));
+* GDP per capita (from [World Bank Open Data](https://data.worldbank.org/));
+* GINI index (from [World Bank Open Data](https://data.worldbank.org/));
 * Foreign Exchange Reserves (from [World Bank Open Data](https://data.worldbank.org/));
 * Unemployment (from [World Bank Open Data](https://data.worldbank.org/));
 * Inflation Rate (from [World Bank Open Data](https://data.worldbank.org/));
