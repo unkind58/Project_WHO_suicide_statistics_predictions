@@ -6,8 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-#
-#
+from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn import linear_model
 from sklearn.impute import SimpleImputer
@@ -169,7 +168,7 @@ def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,tra
     return mae
 #
 #
-def print_score_scaler(m):
+def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
     '''Function takes a model and calculates and prints its RMSE values and r² 
     scores for train and validation sets, but both sets should be scaled.
     Parameters:
@@ -182,7 +181,6 @@ def print_score_scaler(m):
     res = [rmse(m.predict(X_train_scaler), y_train),
            rmse(m.predict(X_valid_scaler), y_valid),
            m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid)]
-    if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
-    print(res)
+    return print(res)
 #
 #
