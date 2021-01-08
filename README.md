@@ -55,5 +55,5 @@ Tribe of AI
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-## Render `app.ipynb` via nbviewer 
+## Render `WHO_suicide_statistics_predictions.ipynb` via nbviewer 
 [WHO_suicide_statistics_predictions.ipynb](https://nbviewer.jupyter.org/github/unkind58/Project_WHO_suicide_statistics_predictions/blob/master/WHO_suicide_statistics_predictions.ipynb)
