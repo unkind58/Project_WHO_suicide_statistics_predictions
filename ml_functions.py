@@ -17,8 +17,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.metrics import mean_absolute_error, r2_score, accuracy_score
-#
-#
+
+
 def refactor_titles(df: pd.DataFrame, sub_chars=[' ','-',':'], drop_chars=['(',')','[',']']) -> list:
     '''
     Function generalizes all column titles, i.e. lowers all cases, makes characters 
@@ -51,8 +51,8 @@ def refactor_titles(df: pd.DataFrame, sub_chars=[' ','-',':'], drop_chars=['(','
                 continue
             print(f'Drop of "{drop_char}" occured {counter_drop} times.')              
     return list_columns
-#
-#
+
+
 def nan_columns_by_country(df: pd.DataFrame, column_mark: str) -> dict:
     '''Function identifies column names in a given DataFrame containing at 
     least one NaN value, puts them into a list and assigns it to variable
@@ -76,8 +76,8 @@ def nan_columns_by_country(df: pd.DataFrame, column_mark: str) -> dict:
     for key, value in sorted(set_of_nan.items()):
         print(f'* {len([item for item in value if item])} categories in column "{column_mark}" with at least one NaN in "{key}".')
     return set_of_nan
-#
-#
+
+
 def backfilling_nan_by_country(df: pd.DataFrame, columns_nan_dict: dict, target_column: str, category_column: str):
     '''Function fills NaN values directly into given DataFrame using 'backfill' method.
     Parameters:
@@ -96,8 +96,8 @@ def backfilling_nan_by_country(df: pd.DataFrame, columns_nan_dict: dict, target_
         return f'NaN values were filled in "{target_column}"" column'
     else:
         return f'There are no NaN values "{target_column}"" column'
-#
-#
+
+    
 def missing_values(df: pd.DataFrame):
     ''' Functions uses missingno library and prints each DataFrame's 
     column name and count of NaN which were found in it.
@@ -110,8 +110,8 @@ def missing_values(df: pd.DataFrame):
     for column in df.columns[df.isnull().any(axis=0)]:
         print(f'Column "{column}" has {df[column].isnull().sum()} missing values.')
     return missingno.bar(df)
-#
-#
+
+
 def rmse(x: np.ndarray,y: np.ndarray): 
     '''Root Mean Square Error (RMSE) is the standard deviation of the residuals 
     (prediction errors). Function takes predictions based on trained features as 
@@ -126,8 +126,8 @@ def rmse(x: np.ndarray,y: np.ndarray):
     oob_score_]
     '''
     return math.sqrt(((x-y)**2).mean())
-#
-#
+
+
 def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
     '''Function takes a model and calculates and prints its RMSE values and r² 
     scores for train and validation set. Also attaches oob_score for Random 
@@ -135,18 +135,24 @@ def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Ser
     Parameters:
     -----------
     (1) m --> given model;
+    (2) X_train --> training set of independent features;
+    (3) X_valid --> validation set of independent features;
+    (4) y_train --> training set of dependent features;
+    (5) y_valid --> validation set of dependent features;
     -----------
     Returns scoring values in the following order: 
     [training rmse, validation rmse, r² for training set, r² for validation set, 
-    oob_score_]
+    mae for validation set, oob_score_]
     '''
     res = [rmse(m.predict(X_train), y_train),
            rmse(m.predict(X_valid), y_valid),
-           m.score(X_train, y_train), m.score(X_valid, y_valid)]
+           m.score(X_train, y_train), m.score(X_valid, y_valid),
+           mean_absolute_error(y_train, m.predict(X_train)),
+           mean_absolute_error(y_valid, m.predict(X_valid))]
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
     return print(res)
-#
-#
+
+
 def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,train_y: pd.Series, val_y:pd.Series) -> np.float64:
     '''Mean Absolute Error (MAE) evaluates the average dimension
     of the error in a predictions set. Function takes X and y 
@@ -166,21 +172,26 @@ def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,tra
     preds_val = model.predict(val_X)
     mae = mean_absolute_error(val_y, preds_val)
     return mae
-#
-#
+
+
 def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
     '''Function takes a model and calculates and prints its RMSE values and r² 
     scores for train and validation sets, but both sets should be scaled.
     Parameters:
     -----------
-    (1) m --> given model;
+    (1) m --> given model;
+    (2) X_train --> training set of independent features;
+    (3) X_valid --> validation set of independent features;
+    (4) y_train --> training set of dependent features;
+    (5) y_valid --> validation set of dependent features;
     -----------
-    Returns scoring values in the following order: [training rmse, validation -
-    rmse, r² for training set, r² for validation set] 
+    Returns scoring values in the following order: 
+    [training rmse, validation rmse, r² for training set, r² for validation set, 
+    mae for validation set]
     '''
     res = [rmse(m.predict(X_train_scaler), y_train),
            rmse(m.predict(X_valid_scaler), y_valid),
-           m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid)]
+           m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid),
+           mean_absolute_error(y_train, m.predict(X_train)),
+           mean_absolute_error(y_valid, m.predict(X_valid))]
     return print(res)
-#
-#
