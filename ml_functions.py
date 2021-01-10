@@ -192,6 +192,6 @@ def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFr
     res = [rmse(m.predict(X_train_scaler), y_train),
            rmse(m.predict(X_valid_scaler), y_valid),
            m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid),
-           mean_absolute_error(y_train, m.predict(X_train)),
-           mean_absolute_error(y_valid, m.predict(X_valid))]
+           mean_absolute_error(y_train, m.predict(X_train_scaler)),
+           mean_absolute_error(y_valid, m.predict(X_valid_scaler))]
     return print(res)
