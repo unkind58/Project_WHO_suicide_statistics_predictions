@@ -6,12 +6,16 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn import linear_model
 from sklearn.impute import SimpleImputer
+from pprint import pprint, PrettyPrinter
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -63,9 +67,11 @@ def nan_columns_by_country(df: pd.DataFrame, column_mark: str) -> dict:
     Parameters:
     -----------
     (1) df --> given DataFrame;
-    (2) column_nan --> categorical column, each one will be filtered for NaN values;
+    (2) column_nan --> categorical column, each one will be filtered for 
+    NaN values;
     -----------
-    Returns dictionary with given column categorical values and count of NaN values in it.
+    Returns dictionary with given column categorical values and count of 
+    NaN values in it.
     '''
     columns_nan_list = df.columns[df.isna().any()].tolist()
     if column_mark in columns_nan_list:
@@ -79,15 +85,20 @@ def nan_columns_by_country(df: pd.DataFrame, column_mark: str) -> dict:
 
 
 def backfilling_nan_by_country(df: pd.DataFrame, columns_nan_dict: dict, target_column: str, category_column: str):
-    '''Function fills NaN values directly into given DataFrame using 'backfill' method.
+    '''Function fills NaN values directly into given DataFrame using 
+    'backfill' method.
     Parameters:
     -----------
     (1) df --> given DataFrame;
-    (2) columns_nan_dict --> dictionary with all NaN columns as a key and all NaN categories from category_column;
-    (3) target_column --> column name where NaN values will be filled using 'backfill' method;
-    (4) category_column --> column name where categories have NaN values in 'target_column';
+    (2) columns_nan_dict --> dictionary with all NaN columns as a key and 
+    all NaN categories from category_column;
+    (3) target_column --> column name where NaN values will be filled using 
+    'backfill' method;
+    (4) category_column --> column name where categories have NaN values 
+    in 'target_column';
     -----------
-    Returns text confirmation that NaN values were filled, otherwise text confirmation that no NaN occured.
+    Returns text confirmation that NaN values were filled, otherwise text 
+    confirmation that no NaN occured.
     '''
     if df[target_column].isnull().any():
         for nan_category in columns_nan_dict[target_column]:
@@ -136,9 +147,9 @@ def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Ser
     -----------
     (1) m --> given model;
     (2) X_train --> training set of independent features;
-    (3) X_valid --> validation set of independent features;
+    (3) X_valid --> validation set of independent feature;
     (4) y_train --> training set of dependent features;
-    (5) y_valid --> validation set of dependent features;
+    (5) y_valid --> validation set of dependent feature;
     -----------
     Returns scoring values in the following order: 
     [training rmse, validation rmse, r² for training set, r² for validation set, 
@@ -150,7 +161,11 @@ def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Ser
            mean_absolute_error(y_train, m.predict(X_train)),
            mean_absolute_error(y_valid, m.predict(X_valid))]
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
-    return print(res)
+    pp = PrettyPrinter(width=69, compact=False)
+    return pp.pprint(
+        f'RMSE Train set: {round(res[0],8)}, RMSE Validation set: {round(res[1],8)}, '
+        f'r² Train set: {round(res[2],8)}, r² Validation set:{round(res[3],8)},         '
+        f'MAE Train set: {round(res[4],8)}, MAE Validation set: {round(res[5],8)}')
 
 
 def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,train_y: pd.Series, val_y:pd.Series) -> np.float64:
@@ -161,9 +176,9 @@ def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,tra
     -----------
     (1) max_leaf_nodes --> list of possible 'max_leaf_nodes' values;
     (2) train_X --> training set of independent features;
-    (3) val_X --> validation set of independent features;
+    (3) val_X --> validation set of independent feature;
     (4) train_y --> training set of dependent features;
-    (5) val_y --> validation set of dependent features;
+    (5) val_y --> validation set of dependent feature;
     -----------
     Returns MAE value.
     '''
@@ -176,14 +191,14 @@ def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,tra
 
 def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
     '''Function takes a model and calculates and prints its RMSE values and r² 
-    scores for train and validation sets, but both sets should be scaled.
+    scores for train and validation sets, but both X sets should be scaled.
     Parameters:
     -----------
     (1) m --> given model;
     (2) X_train --> training set of independent features;
-    (3) X_valid --> validation set of independent features;
+    (3) X_valid --> validation set of independent feature;
     (4) y_train --> training set of dependent features;
-    (5) y_valid --> validation set of dependent features;
+    (5) y_valid --> validation set of dependent feature;
     -----------
     Returns scoring values in the following order: 
     [training rmse, validation rmse, r² for training set, r² for validation set, 
@@ -194,4 +209,36 @@ def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFr
            m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid),
            mean_absolute_error(y_train, m.predict(X_train_scaler)),
            mean_absolute_error(y_valid, m.predict(X_valid_scaler))]
-    return print(res)
+    pp = PrettyPrinter(width=69, compact=False)
+    return pp.pprint(
+        f'RMSE Train set: {round(res[0],8)}, RMSE Validation set: {round(res[1],8)}, '
+        f'r² Train set: {round(res[2],8)}, r² Validation set:{round(res[3],8)},         '
+        f'MAE Train set: {round(res[4],8)}, MAE Validation set: {round(res[5],8)}')
+
+
+def print_score_log(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
+    '''Function takes a model and calculates and prints its RMSE values and r² 
+    scores for train and validation sets, but both y sets should be logarithmed.
+    Parameters:
+    -----------
+    (1) m --> given model;
+    (2) X_train --> training set of independent features;
+    (3) X_valid --> validation set of independent feature;
+    (4) y_train --> training set of dependent features;
+    (5) y_valid --> validation set of dependent feature;
+    -----------
+    Returns scoring values in the following order: 
+    [training rmse, validation rmse, r² for training set, r² for validation set, 
+    mae for validation set]
+    '''
+    res = [rmse(m.predict(X_train), np.exp(y_train-1)),
+           rmse(m.predict(X_valid), np.exp(y_valid-1)),
+           m.score(X_train, y_train), m.score(X_valid, y_valid),
+           mean_absolute_error(np.exp(y_train-1), m.predict(X_train)),
+           mean_absolute_error(np.exp(y_valid-1), m.predict(X_valid))]
+    if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
+    pp = PrettyPrinter(width=68, compact=True)
+    return pp.pprint(
+        f'RMSE_Train_set: {round(res[0],8)}, RMSE_Validation_set: {round(res[1],8)}, '
+        f'r²_Train_set: {round(res[2],8)}, r²_Validation_set:{round(res[3],8)},      '
+        f'MAE_Train_set: {round(res[4],8)}, MAE_Validation_set: {round(res[5],8)}')
