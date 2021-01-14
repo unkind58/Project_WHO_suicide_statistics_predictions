@@ -231,14 +231,14 @@ def print_score_log(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd
     [training rmse, validation rmse, r² for training set, r² for validation set, 
     mae for validation set]
     '''
-    res = [rmse(m.predict(X_train), np.exp(y_train-1)),
-           rmse(m.predict(X_valid), np.exp(y_valid-1)),
+    res = [rmse(np.expm1(m.predict(X_train)), np.expm1(y_train)),
+           rmse(np.expm1(m.predict(X_valid)), np.expm1(y_valid)),
            m.score(X_train, y_train), m.score(X_valid, y_valid),
-           mean_absolute_error(np.exp(y_train-1), m.predict(X_train)),
-           mean_absolute_error(np.exp(y_valid-1), m.predict(X_valid))]
+           mean_absolute_error(np.expm1(y_train), np.expm1(m.predict(X_train))),
+           mean_absolute_error(np.expm1(y_valid), np.expm1(m.predict(X_valid)))]
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
     pp = PrettyPrinter(width=68, compact=True)
     return pp.pprint(
         f'RMSE_Train_set: {round(res[0],8)}, RMSE_Validation_set: {round(res[1],8)}, '
-        f'r²_Train_set: {round(res[2],8)}, r²_Validation_set:{round(res[3],8)},      '
+        f'r²_Train_set: {round(res[2],8)}, r²_Validation_set:{round(res[3],8)},          '
         f'MAE_Train_set: {round(res[4],8)}, MAE_Validation_set: {round(res[5],8)}')
