@@ -6,16 +6,16 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+from pprint import pprint
 from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn import linear_model
 from sklearn.impute import SimpleImputer
-from pprint import pprint, PrettyPrinter
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -160,12 +160,17 @@ def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Ser
            m.score(X_train, y_train), m.score(X_valid, y_valid),
            mean_absolute_error(y_train, m.predict(X_train)),
            mean_absolute_error(y_valid, m.predict(X_valid))]
+    CRED = '\033[91m'
+    CEND = '\033[0m'
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
-    pp = PrettyPrinter(width=69, compact=False)
-    return pp.pprint(
-        f'RMSE Train set: {round(res[0],8)}, RMSE Validation set: {round(res[1],8)}, '
-        f'r² Train set: {round(res[2],8)}, r² Validation set:{round(res[3],8)},         '
-        f'MAE Train set: {round(res[4],8)}, MAE Validation set: {round(res[5],8)}')
+    if hasattr(m, 'oob_score_'): print(CRED + f'     oob Score: \t\t{round(res[6],8)}'+ CEND)
+    return print(f' \
+    RMSE Train set: \t\t{round(res[0],8)}  \n \
+    RMSE Validation set: \t{round(res[1],8)} \n \
+    r² Train set: \t\t{round(res[2],8)} \n \
+    r² Validation set: \t{round(res[3],8)} \n \
+    MAE Train set: \t\t{round(res[4],8)} \n \
+    MAE Validation set: \t{round(res[5],8)}')
 
 
 def get_mae(max_leaf_nodes: list, train_X: pd.DataFrame, val_X: pd.DataFrame,train_y: pd.Series, val_y:pd.Series) -> np.float64:
@@ -209,12 +214,13 @@ def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFr
            m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid),
            mean_absolute_error(y_train, m.predict(X_train_scaler)),
            mean_absolute_error(y_valid, m.predict(X_valid_scaler))]
-    pp = PrettyPrinter(width=69, compact=False)
-    return pp.pprint(
-        f'RMSE Train set: {round(res[0],8)}, RMSE Validation set: {round(res[1],8)}, '
-        f'r² Train set: {round(res[2],8)}, r² Validation set:{round(res[3],8)},         '
-        f'MAE Train set: {round(res[4],8)}, MAE Validation set: {round(res[5],8)}')
-
+    return print(f' \
+    RMSE Train set: \t\t{round(res[0],8)}  \n \
+    RMSE Validation set: \t{round(res[1],8)} \n \
+    r² Train set: \t\t{round(res[2],8)} \n \
+    r² Validation set: \t{round(res[3],8)} \n \
+    MAE Train set: \t\t{round(res[4],8)} \n \
+    MAE Validation set: \t{round(res[5],8)}')
 
 def print_score_log(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid:pd.Series):
     '''Function takes a model and calculates and prints its RMSE values and r² 
@@ -233,12 +239,15 @@ def print_score_log(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd
     '''
     res = [rmse(np.expm1(m.predict(X_train)), np.expm1(y_train)),
            rmse(np.expm1(m.predict(X_valid)), np.expm1(y_valid)),
-           m.score(X_train, y_train), m.score(X_valid, y_valid),
+           m.score(X_train, np.expm1(y_train)), m.score(X_valid, np.expm1(y_valid)),
            mean_absolute_error(np.expm1(y_train), np.expm1(m.predict(X_train))),
            mean_absolute_error(np.expm1(y_valid), np.expm1(m.predict(X_valid)))]
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
-    pp = PrettyPrinter(width=68, compact=True)
-    return pp.pprint(
-        f'RMSE_Train_set: {round(res[0],8)}, RMSE_Validation_set: {round(res[1],8)}, '
-        f'r²_Train_set: {round(res[2],8)}, r²_Validation_set:{round(res[3],8)},          '
-        f'MAE_Train_set: {round(res[4],8)}, MAE_Validation_set: {round(res[5],8)}')
+    if hasattr(m, 'oob_score_'): print(f'     oob Score: \t\t{round(res[6],8)}')
+    return print(f' \
+    RMSE Train set: \t\t{round(res[0],8)}  \n \
+    RMSE Validation set: \t{round(res[1],8)} \n \
+    r² Train set: \t\t{round(res[2],8)} \n \
+    r² Validation set: \t{round(res[3],8)} \n \
+    MAE Train set: \t\t{round(res[4],8)} \n \
+    MAE Validation set: \t{round(res[5],8)}')
