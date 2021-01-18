@@ -239,7 +239,8 @@ def print_score_log(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd
     '''
     res = [rmse(np.expm1(m.predict(X_train)), np.expm1(y_train)),
            rmse(np.expm1(m.predict(X_valid)), np.expm1(y_valid)),
-           m.score(X_train, np.expm1(y_train)), m.score(X_valid, np.expm1(y_valid)),
+           r2_score(np.expm1(y_train), np.expm1(m.predict(X_train))), 
+           r2_score(np.expm1(y_valid), np.expm1(m.predict(X_valid))),
            mean_absolute_error(np.expm1(y_train), np.expm1(m.predict(X_train))),
            mean_absolute_error(np.expm1(y_valid), np.expm1(m.predict(X_valid)))]
     if hasattr(m, 'oob_score_'): res.append(m.oob_score_)
