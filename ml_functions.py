@@ -1,4 +1,5 @@
 import math
+import eli5
 import random
 import pathlib
 import missingno
@@ -11,6 +12,7 @@ from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn import linear_model
 from sklearn.impute import SimpleImputer
+from eli5.sklearn import PermutationImportance
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.preprocessing import RobustScaler
@@ -21,6 +23,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.metrics import mean_absolute_error, r2_score, accuracy_score
+
 
 
 def refactor_titles(df: pd.DataFrame, sub_chars=[' ','-',':'], drop_chars=['(',')','[',']']) -> list:
@@ -157,7 +160,8 @@ def print_score(m, X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Ser
     '''
     res = [rmse(m.predict(X_train), y_train),
            rmse(m.predict(X_valid), y_valid),
-           m.score(X_train, y_train), m.score(X_valid, y_valid),
+           r2_score(y_train, m.predict(X_train)),
+           r2_score(y_valid, m.predict(X_valid)),
            mean_absolute_error(y_train, m.predict(X_train)),
            mean_absolute_error(y_valid, m.predict(X_valid))]
     CRED = '\033[91m'
@@ -211,7 +215,8 @@ def print_score_scaler(m,X_train_scaler: pd.DataFrame, X_valid_scaler: pd.DataFr
     '''
     res = [rmse(m.predict(X_train_scaler), y_train),
            rmse(m.predict(X_valid_scaler), y_valid),
-           m.score(X_train_scaler, y_train), m.score(X_valid_scaler, y_valid),
+           r2_score(y_train, m.predict(X_train_scaler)),
+           r2_score(y_valid, m.predict(X_valid_scaler)),
            mean_absolute_error(y_train, m.predict(X_train_scaler)),
            mean_absolute_error(y_valid, m.predict(X_valid_scaler))]
     return print(f' \
