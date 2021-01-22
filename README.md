@@ -51,8 +51,8 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 Tribe of AI
 
 ## Additional information
-* Data set preparation time: 23 HOURS;
-* Pre-processing and modeling: 50 HOURS.
+* Data set preparation: 23 hours;
+* Pre-processing and modeling: 51 hour.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
