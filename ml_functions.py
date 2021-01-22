@@ -1,5 +1,6 @@
 import math
 import eli5
+import shap 
 import random
 import pathlib
 import graphviz
@@ -26,7 +27,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, accuracy_score
 
 
 def refactor_titles(df: pd.DataFrame, sub_chars=[' ','-',':'], drop_chars=['(',')','[',']']) -> list:
