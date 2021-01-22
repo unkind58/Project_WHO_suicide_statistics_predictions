@@ -1,7 +1,5 @@
-# IN PROGRESS !!
-
 ## Project_WHO_suicide_statistics_predictions
-WHO suicide statistics predictions for European Union country-members
+WHO suicide statistics predictions for European Union country-members.
 
 ## Main content and dependent variable
 WHO Suicide Statistics data ([WHO Mortality Database](https://www.who.int/healthinfo/mortality_data/en/)) for each  EU member country, year, age groups and sex.
@@ -51,6 +49,10 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 
 ## Acknowledgments
 Tribe of AI
+
+## Additional information
+* Data set preparation time: 23 HOURS;
+* Pre-processing and modeling: 50 HOURS.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
