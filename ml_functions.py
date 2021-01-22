@@ -2,14 +2,17 @@ import math
 import eli5
 import random
 import pathlib
+import graphviz
 import missingno
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn import tree
 from pprint import pprint
 from sklearn import metrics
 from sklearn.svm import SVC
+from xgboost import XGBRegressor
 from sklearn import linear_model
 from sklearn.impute import SimpleImputer
 from eli5.sklearn import PermutationImportance
@@ -21,9 +24,9 @@ from sklearn.linear_model import Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.metrics import mean_absolute_error, r2_score, accuracy_score
-
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
 
 
 def refactor_titles(df: pd.DataFrame, sub_chars=[' ','-',':'], drop_chars=['(',')','[',']']) -> list:
