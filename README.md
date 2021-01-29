@@ -50,10 +50,6 @@ Note that temporal dependencies in some cases do not cover the year of entering 
 ## Acknowledgments
 Tribe of AI
 
-## Additional information
-* Data set preparation: 23 hours;
-* Pre-processing and modeling: 51 hour.
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
